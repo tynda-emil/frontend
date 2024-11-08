@@ -125,18 +125,20 @@ header {
 
 .fa-volume-high{
 	color:#C195CE;
-	margin-right: 7px;
+	margin-right: 11px;
 }
 
 .volume-control {
             margin-top: -5px;
             display: flex;
             align-items: center;
+	width: 130px;
         }
         .volume-control input {
             width: 100px;
             margin-right: 10px;
         }
+
         input[type="range"] {
 			overflow: hidden;
 			-webkit-appearance: none;
