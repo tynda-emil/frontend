@@ -1,3 +1,37 @@
+/* Основная полоса прокрутки */
+::-webkit-scrollbar {
+    width: 12px;  /* Ширина полосы прокрутки */
+    height: 12px; /* Высота полосы прокрутки для горизонтальной */
+}
+
+/* Ползунок (thumb) полосы прокрутки */
+::-webkit-scrollbar-thumb {
+    background-color: #C195CE; /* Цвет ползунка */
+    border-radius: 10px; /* Закругленные углы */
+}
+
+/* Когда ползунок в состоянии hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ab82b7; /* Цвет ползунка при наведении */
+}
+
+/* Полоса прокрутки на фоне */
+::-webkit-scrollbar-track {
+    background-color: #333; /* Очень темный серый фон */
+    border-radius: 10px; /* Закругленные углы фона */
+}
+
+/* Для горизонтальной полосы прокрутки */
+::-webkit-scrollbar-horizontal {
+    height: 12px;
+}
+
+::-webkit-scrollbar-thumb-horizontal {
+    background-color: #C195CE;
+    border-radius: 10px;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -33,7 +67,7 @@ header {
     align-items: center;
     margin-left: auto;
     margin-right: 25px;
-    width: 500px;
+    width: 38%;
 }
 .album-cover {
     width: 80px; /* Увеличенный размер */
@@ -67,9 +101,9 @@ header {
     margin-bottom: 5px;
 }
 .progress {
-    width: 30%;
+    width: 0%;
     height: 100%;
-    background-color: #cb6ce6;
+    background-color: #C195CE;
 }
 .controls {
     display: flex;
@@ -88,6 +122,67 @@ header {
 .controls button:hover {
     transform: scale(1.2);
 }
+
+.fa-volume-high{
+	color:#C195CE;
+	margin-right: 7px;
+}
+
+.volume-control {
+            margin-top: -5px;
+            display: flex;
+            align-items: center;
+        }
+        .volume-control input {
+            width: 100px;
+            margin-right: 10px;
+        }
+        input[type="range"] {
+			overflow: hidden;
+			-webkit-appearance: none;
+            width: 100px;
+            height: 6px;
+            background-color: #444;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 6px;
+            -webkit-appearance: none;
+            background-color: #444;
+			margin-top: -1px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            width: 10px;
+            height: 10px;
+            -webkit-appearance: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+
+        input[type="range"]::-moz-range-track {
+            background-color: #444;
+        }
+
+
+        input[type="range"]::-ms-fill-lower {
+            background-color: #C195CE;
+			-webkit-appearance: none;
+        }
+        
+        input[type="range"]::-ms-fill-upper {
+            background-color: #444;
+			-webkit-appearance: none;
+        }
+
+        /* Update the progress color dynamically */
+        input[type="range"]::-webkit-slider-runnable-track {
+			-webkit-appearance: none;
+            background: linear-gradient(to right, #C195CE 0%, #C195CE var(--progress), #444 var(--progress), #444 100%);
+        }
+
 .user-container {
     margin-left: auto;
     display: flex;
