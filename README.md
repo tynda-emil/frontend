@@ -1,1 +1,1 @@
-# frontend
+Tynda Front-end repository.
