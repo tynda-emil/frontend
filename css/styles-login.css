@@ -1,0 +1,120 @@
+/* Общие стили для страницы */
+body {
+    background-color: black;
+    background-image: url('../images/login-back.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+	overflow: hidden;
+}
+
+/* Контейнер для логина */
+.login-container {
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(255, 255, 255, 0.1); /* Белый фон с прозрачностью 20% */
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    height: 70%;
+
+}
+
+/* Левый блок с приветствием */
+.welcome-message {
+    padding-right: 20px;
+    font-family: "Poppins", sans-serif;
+    flex-grow: 1;
+    width: 60%;
+}
+
+.welcome-message h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+
+.welcome-message p {
+    font-size: 1.5em;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+/* Правый блок с формой логина */
+.login-box {
+    background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый фон */
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 40%;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-box h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    font-family: "Poppins", sans-serif;;
+    font-weight: 400;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+    outline: none;
+    font-size: 1em;
+    background-color: rgba(255, 255, 255, 0.8); /* Светлый цвет полей */
+    color: black;
+    width:80%;
+}
+
+.login-box button {
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1em;
+    background-color: #C195CE; /* Цвет кнопки */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+    width:83%;
+}
+
+.login-box button:hover {
+    background-color: #ab82b7; /* Цвет кнопки при наведении */
+}
+
+.login-box p {
+    margin-top: 15px;
+    font-size: 1em;
+}
+
+.login-box a {
+    color: #c49bd3;
+    text-decoration: none;
+}
+
+.login-box a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,173 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    display: flex;
+    height: 100vh;
+    background-color:#080808;
+}
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: black;
+    height: 110px; /* Увеличенная высота */
+    color: white;
+    text-align: center;
+    padding: 10px 10px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+.header-logo {
+    width: 70px; /* Увеличенная ширина изображения */
+    height: 90px; /* Увеличенная высота изображения */
+    vertical-align: middle;
+    margin-right: 20px;
+}
+.player-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 25px;
+    width: 500px;
+}
+.album-cover {
+    width: 80px; /* Увеличенный размер */
+    height: 80px;
+    background-color: gray;
+    margin-right: 20px;
+}
+.track-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+    width: 180px;
+}
+.track-info h3, .track-info p {
+    margin: 0;
+    font-family: "Red Hat Text", sans-serif;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.1em; /* Увеличенный шрифт */
+}
+.player-right {
+    width: 180px;
+}
+.progress-bar {
+    width: 100%;
+    height: 6px; /* Немного увеличена высота */
+    background-color: #444;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.progress {
+    width: 30%;
+    height: 100%;
+    background-color: #cb6ce6;
+}
+.controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 12px;
+    align-self: center;
+}
+.controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px; /* Увеличенный размер кнопок */
+    cursor: pointer;
+}
+.controls button:hover {
+    transform: scale(1.2);
+}
+.user-container {
+    margin-left: auto;
+    display: flex;
+    gap: 15px;
+    margin-right: 25px;
+}
+.fa-user {
+    font-size: 55px; /* Увеличенный размер иконки пользователя */
+    color: #C195CE;
+}
+
+.fa-user:hover{
+    color: #ab82b7;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    margin-top: 110px;
+}
+aside {
+    position: fixed;
+    top: 110px;
+    left: 0;
+    width: 90px; /* Увеличенная начальная ширина */
+    background-color: black;
+    height: calc(100vh - 110px);
+    padding: 15px;
+    overflow-y: auto;
+    transition: width 0.3s;
+    align-items: center;
+}
+aside:hover {
+    width: 220px; /* Увеличенная ширина при наведении */
+}
+aside ul {
+    list-style: none;
+    padding: 0;
+}
+.menu-item {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+}
+.icon {
+    font-size: 28px; /* Увеличенный размер иконок */
+    transition: margin-right 0.3s;
+    color: #C195CE;
+    width: 25px;
+}
+.label {
+    display: none;
+    margin-left: 12px;
+    font-size: 18px;
+}
+aside:hover .label {
+    display: inline;
+}
+aside:hover .icon {
+    margin-right: 12px;
+}
+main {
+    margin-left: 90px;
+    margin-top: 20px;
+    padding: 20px;
+    width: calc(100% - 90px);
+    height: calc(100vh - 110px);
+    background-color: #080808;
+}
+h1 {
+    font-family: "Poppins", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 2.5em;
+}
+.label {
+    font-family: "Red Hat Text", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
