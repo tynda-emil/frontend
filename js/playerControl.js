@@ -32,3 +32,23 @@ volumeControl.addEventListener('input', () => {
     const volumeProgress = (volumeControl.value / volumeControl.max) * 100;
     volumeControl.style.setProperty('--progress', `${volumeProgress}%`);
 });
+
+//это код для выдвигаюзейся штуки для караоке
+document.getElementById("showLyricsBtn").addEventListener("click", function() {
+    const lyricsContainer = document.getElementById("lyricsContainer");
+    const button = this;
+
+    lyricsContainer.classList.toggle("visible");
+    button.classList.toggle("active"); // смена состояния кнопки
+});
+
+//это для модального окна (которое на весь экран), где отображается текст песни 
+// Кнопка "На весь экран"
+document.querySelector(".fullscreenBtn").addEventListener("click", function() {
+    document.getElementById("fullscreenLyricsModal").style.display = "flex";
+});
+
+// Кнопка "Закрыть"
+document.querySelector(".closeModalBtn").addEventListener("click", function() {
+    document.getElementById("fullscreenLyricsModal").style.display = "none";
+});

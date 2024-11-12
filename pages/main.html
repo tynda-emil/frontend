@@ -40,6 +40,9 @@
         <i class="fa-solid fa-volume-high"></i>
         <input type="range" id="volume" min="0" max="100" value="50">
     </div>
+		<div class="lyricsBtnContainer">
+			<button id="showLyricsBtn" title="Show lyrics"><i class="fa-solid fa-comment"></i></button>
+		</div>
     <div class="user-container">
         <a href="#"><i class="fa-solid fa-user"></i></a>
     </div>
@@ -79,7 +82,21 @@
         </aside>
 
         <!-- Основной контент -->
-        <main>      
+        <main>   
+			<div class="lyricsContainer" id="lyricsContainer">
+				<button class="fullscreenBtn" title="To the full screen">
+        			<i class="fa-solid fa-arrow-up-right-from-square"></i>
+    			</button>
+   				 <p style="color:white;">Текст песни будет здесь...</p>
+			</div>
+			
+			<div id="fullscreenLyricsModal" class="fullscreen-modal">
+        		<button class="closeModalBtn" title="Close full lyrics"><i class="fa-solid fa-arrow-left"></i></button>
+    			<div class="lyrics-content">
+        			<p>Полный текст песни будет здесь...</p>
+    			</div>
+			</div>
+
         </main>
     </div>
 	<script src="../js/playerControl.js"></script>
