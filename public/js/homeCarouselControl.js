@@ -71,7 +71,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     for (let i = 0; i < numArtists; i++) {
-      data.albums.push({ name: `Mock album ${i}`, artist: `Mock artist ${i}` });
+      data.albums.push({
+        id: i,
+        name: `Mock album ${i}`,
+        artist: `Mock artist ${i}`,
+      });
     }
 
     // Рендерим артистов
@@ -96,6 +100,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p class="albumName">${album.name}</p>
         <p class="artistName">${album.artist}</p>
       `;
+      albumElement.addEventListener("click", () => {
+        window.location.href = `albumPage.html?id=${album.id}`;
+      });
       albumsContainer.appendChild(albumElement);
     });
   } catch (error) {
