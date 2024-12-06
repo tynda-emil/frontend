@@ -169,13 +169,14 @@
     .sectionForAlbums .album{
         flex: 0 0 calc(100% / 4 - 10px);
     }
-    .artist-circle-small, .sectionForAlbums .album-cover {
+    .artist-circle-small, .album .album-cover {
         width: 100px;
         height: 100px;
     }
-    .artist .artistName, .sectionForAlbums p {
-        font-size: 15px;
+    .artist .artistName, .sectionForAlbums .album .albumName {
+        font-size: 19px;
     }
+
     .carousel {
         gap: 10px;
     }

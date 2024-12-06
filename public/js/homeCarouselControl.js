@@ -43,45 +43,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   const baseURL = `http://${window.config.mainServiceIp}:${window.config.mainServicePort}`;
 
   try {
-    const response = await fetch(`${baseURL}/home`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      alert("Failed to load data from server.");
-      console.error("Error fetching data:", response.statusText);
-      return;
-    }
-
-    // Получаем JSON с данными
-    const data = await response.json();
+    // const response = await fetch(`${baseURL}/home`, {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    //
+    // if (!response.ok) {
+    //   alert("Failed to load data from server.");
+    //   console.error("Error fetching data:", response.statusText);
+    //   return;
+    // }
+    //
+    // // Получаем JSON с данными
+    // const data = await response.json();
 
     // Фиктивные данные
-    // const data = {
-    //   artists: [
-    //     { name: "Mock Artist 1" },
-    //     { name: "Mock Artist 2" },
-    //     { name: "Mock Artist 1" },
-    //     { name: "Mock Artist 2" },
-    //     { name: "Mock Artist 1" },
-    //     { name: "Mock Artist 2" },
-    //     { name: "Mock Artist 1" },
-    //     { name: "Mock Artist 2" },
-    //   ],
-    //   albums: [
-    //     { name: "Mock Album 1", artist: "Mock Artist 1" },
-    //     { name: "Mock Album 2", artist: "Mock Artist 2" },
-    //     { name: "Mock Album 1", artist: "Mock Artist 1" },
-    //     { name: "Mock Album 2", artist: "Mock Artist 2" },
-    //     { name: "Mock Album 1", artist: "Mock Artist 1" },
-    //     { name: "Mock Album 2", artist: "Mock Artist 2" },
-    //     { name: "Mock Album 1", artist: "Mock Artist 1" },
-    //     { name: "Mock Album 2", artist: "Mock Artist 2" },
-    //   ],
-    // };
+    const data = {
+      artists: [],
+      albums: [],
+    };
+
+    const numArtists = 10;
+    for (let i = 0; i < numArtists; i++) {
+      data.artists.push({ name: `Mock artist ${i}` });
+    }
+
+    for (let i = 0; i < numArtists; i++) {
+      data.albums.push({ name: `Mock album ${i}`, artist: `Mock artist ${i}` });
+    }
 
     // Рендерим артистов
     const artistsContainer = document.querySelector(".artists-container");
