@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ).value;
 
     try {
-      const baseURL = "http://192.168.1.201:8080"; //здесь нужно поменять IP адрес и порт на адрес на котором запущен микросервис логина и регистрации
-      const response = await fetch(`${baseURL}/auth/login`, {
+      const baseURL = `http://${window.config.logRegServiceIp}:${window.config.logRegServicePort}`;
+      const response = await fetch(`${baseURL}/auth/registration`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

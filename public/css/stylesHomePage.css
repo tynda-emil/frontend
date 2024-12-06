@@ -1,0 +1,180 @@
+/* COMMON STYLES FOR CAROUSEL */
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden; /* Скрыть содержимое, которое выходит за пределы карусели */
+    position: relative;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.carousel {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    scroll-behavior: smooth; /* Плавная прокрутка */
+    scroll-snap-type: x mandatory; /* Автоматическое выравнивание */
+    padding: 10px 0;
+}
+
+.carousel::-webkit-scrollbar {
+    display: none; /* Скрыть скролл */
+}
+
+.carousel-nav {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+    z-index: 100; /* Чтобы кнопки были поверх карусели */
+}
+
+.carousel-nav:hover {
+    background-color: #c195ce;
+}
+
+/* STYLES FOR ARTISTS CAROUSEL */
+.artist, .album {
+    flex: 0 0 calc(100% / 6 - 15px); /* 6 элементов на экране */
+    text-align: center;
+    scroll-snap-align: start; /* Центровка элементов при прокрутке */
+    cursor: pointer;
+}
+
+.artist-circle {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: #c195ce; /* Цвет по умолчанию */
+    border-radius: 50%; /* Круг */
+    overflow: hidden; /* Если изображение больше размера */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.artist img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Стили для имени артиста */
+.artist, .artistName {
+    margin-top: 10px;
+    color: #e8e8e8;
+    font-size: 20px;
+}
+
+/* Заполнитель */
+.artist[data-placeholder="true"] .artist-circle {
+    background-color: #c195ce; /* Цвет по умолчанию */
+}
+
+.artist[data-placeholder="true"] p {
+    color: #e8e8e8; /* Цвет текста-заполнителя */
+}
+
+.sectionForArtists h2{
+    font-family: "Red Hat Text", sans-serif;
+    color: white;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+/* STYLES FOR ALBUMS */
+.sectionForAlbums h2{
+    font-family: "Red Hat Text", sans-serif;
+    color: white;
+    font-weight: 500;
+    margin-left: 10px;
+}
+.sectionForAlbums .albums-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    scroll-snap-type: x mandatory; /* Прокрутка с прилипанием */
+    padding: 10px 0;
+}
+.sectionForAlbums .album {
+    flex: 0 0 calc(100% / 6 - 15px); /* 6 элементов на экране */
+    text-align: center;
+    scroll-snap-align: start; /* Элемент фиксируется в начале при прокрутке */
+    cursor: pointer;
+}
+.sectionForAlbums .album-cover {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto;
+    background-color: #c195ce; /* Цвет по умолчанию, если нет изображения */
+    border-radius: 10px; /* Слегка скругленные углы */
+    overflow: hidden; /* Если изображение больше */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sectionForAlbums .album img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.sectionForAlbums .album .albumName {
+    margin-top: 10px;
+    color: #e8e8e8;
+    font-size: 20px;
+}
+.sectionForAlbums .album .artistName {
+    margin-top: 10px;
+    color: #e8e8e8;
+    font-size: 17px;
+    color: gray;
+}
+
+/* Заполнитель */
+.album[data-placeholder="true"] .album-cover {
+    background-color: #c195ce; /* Цвет по умолчанию */
+}
+
+.album[data-placeholder="true"] p {
+    color: #666; /* Цвет текста-заполнителя */
+}
+
+/* Кнопки навигации */
+.carousel-nav {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+/* Для адаптации на меньших экранах */
+@media (max-width: 768px) {
+    .artist {
+        flex: 0 0 calc(100% / 3 - 10px); /* 3 элемента на экране */
+    }
+    .sectionForAlbums .album{
+        flex: 0 0 calc(100% / 3 - 10px);
+    }
+    .artist-circle, .sectionForAlbums .album-cover {
+        width: 100px;
+        height: 100px;
+    }
+    .artist p, .sectionForAlbums p {
+        font-size: 15px;
+    }
+    .carousel {
+        gap: 10px; /* Меньшее расстояние между элементами на мобильных */
+    }
+}

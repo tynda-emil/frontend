@@ -41,6 +41,17 @@ body {
   height: 100vh;
   background-color: #080808;
 }
+
+/* HEADER */
+h1 {
+  font-family: "Poppins", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 2.6em;
+}
+
+/* STYLES FOR HEADER */
 header {
   position: fixed;
   top: 0;
@@ -61,6 +72,8 @@ header {
   vertical-align: middle;
   margin-right: 20px;
 }
+/* STYLES FOR PLAYER CONTAINER
+ контейнер с обложкой, названием трека, строчкой проигрывания и контролсами*/
 .player-container {
   display: flex;
   align-items: center;
@@ -123,11 +136,11 @@ header {
   transform: scale(1.2);
 }
 
+/* STYLES FOR VOLUME CONTROL */
 .fa-volume-high {
   color: #c195ce;
   margin-right: 11px;
 }
-
 .volume-control {
   margin-top: -5px;
   display: flex;
@@ -190,11 +203,10 @@ input[type="range"]::-webkit-slider-runnable-track {
     #444 100%
   );
 }
-
+/* STYLE FOR BUTTON WHICH SHOWS LYRICS */
 .lyricsBtnContainer {
   margin-left: 55px;
 }
-
 .lyricsBtnContainer button {
   background-color: transparent;
   background: none;
@@ -203,21 +215,104 @@ input[type="range"]::-webkit-slider-runnable-track {
   color: #c195ce;
   font-size: 27px;
 }
-
 .lyricsBtnContainer button:hover {
   color: #ab82b7;
 }
 
+/* STYLES FOR USER ICON */
+.user-container {
+  margin-left: auto;
+  display: flex;
+  gap: 15px;
+  margin-right: 25px;
+}
+
+.fa-user {
+  font-size: 55px; /* Увеличенный размер иконки пользователя */
+  color: #c195ce;
+}
+
+.fa-user:hover {
+  color: #ab82b7;
+}
+
+/* STYLES FOR LEFT MENU */
+.container {
+  display: flex;
+  width: 100%;
+  margin-top: 110px;
+}
+aside {
+  position: fixed;
+  top: 110px;
+  left: 0;
+  width: 90px; /* Увеличенная начальная ширина */
+  background-color: black;
+  height: calc(100vh - 110px);
+  padding: 15px;
+  overflow-y: auto;
+  transition: width 0.3s;
+  align-items: center;
+  z-index: 120;
+}
+aside:hover {
+  width: 220px; /* Увеличенная ширина при наведении */
+}
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+}
+.label {
+  font-family: "Red Hat Text", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.icon {
+  font-size: 28px; /* Увеличенный размер иконок */
+  transition: margin-right 0.3s;
+  color: #c195ce;
+  width: 25px;
+}
+.label {
+  display: none;
+  margin-left: 12px;
+  font-size: 18px;
+}
+aside:hover .label {
+  display: inline;
+}
+aside:hover .icon {
+  margin-right: 12px;
+}
+
+/* COMMON STYLES FOR MAIN */
+main {
+  margin-left: 90px;
+  padding: 20px;
+  width: calc(100% - 90px);
+  height: calc(100vh - 110px);
+  background-color: #080808;
+}
+
+/* CONTAINER FOR SMALL SONG LYRICS AT THE RIGHT */
 .lyricsContainer {
   position: fixed;
-  right: -290px; /* по умолчанию скрыто */
-  width: 290px;
+  right: -300px; /* по умолчанию скрыто */
+  width: 300px;
   height: 100%;
   background-color: black;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
   transition: right 0.3s ease; /* анимация выдвижения */
-  z-index: 100;
+  z-index: 120;
   overflow-y: auto; /* скроллинг для длинного текста */
   top: 110px;
 }
@@ -246,13 +341,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   color: #ab82b7;
 }
 
-.user-container {
-  margin-left: auto;
-  display: flex;
-  gap: 15px;
-  margin-right: 25px;
-}
-
+/* LYRICS ON FULL SCREEN */
 .fullscreen-modal {
   display: none; /* Скрыто по умолчанию */
   position: fixed;
@@ -268,9 +357,6 @@ input[type="range"]::-webkit-slider-runnable-track {
   justify-content: center;
 }
 
-.fullscreen-modal .lyrics-content {
-}
-
 .fullscreen-modal .closeModalBtn {
   position: absolute;
   top: 10px;
@@ -282,82 +368,28 @@ input[type="range"]::-webkit-slider-runnable-track {
   cursor: pointer;
 }
 
-.fa-user {
-  font-size: 55px; /* Увеличенный размер иконки пользователя */
-  color: #c195ce;
+
+
+/* Для адаптации на меньших экранах */
+@media (max-width: 768px) {
+  .artist {
+    flex: 0 0 calc(100% / 3 - 10px); /* 3 элемента на экране */
+  }
+
+  .artist-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .artist p {
+    font-size: 12px;
+  }
 }
 
-.fa-user:hover {
-  color: #ab82b7;
-}
 
-.container {
-  display: flex;
-  width: 100%;
-  margin-top: 110px;
-}
-aside {
-  position: fixed;
-  top: 110px;
-  left: 0;
-  width: 90px; /* Увеличенная начальная ширина */
-  background-color: black;
-  height: calc(100vh - 110px);
-  padding: 15px;
-  overflow-y: auto;
-  transition: width 0.3s;
-  align-items: center;
-}
-aside:hover {
-  width: 220px; /* Увеличенная ширина при наведении */
-}
-aside ul {
-  list-style: none;
-  padding: 0;
-}
-.menu-item {
-  display: flex;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-  padding: 12px;
-}
-.icon {
-  font-size: 28px; /* Увеличенный размер иконок */
-  transition: margin-right 0.3s;
-  color: #c195ce;
-  width: 25px;
-}
-.label {
-  display: none;
-  margin-left: 12px;
-  font-size: 18px;
-}
-aside:hover .label {
-  display: inline;
-}
-aside:hover .icon {
-  margin-right: 12px;
-}
-main {
-  margin-left: 90px;
-  padding: 20px;
-  width: calc(100% - 90px);
-  height: calc(100vh - 110px);
-  background-color: #080808;
-}
-h1 {
-  font-family: "Poppins", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 2.6em;
-}
-.label {
-  font-family: "Red Hat Text", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
+
+
+/* АДАПТАЦИЯ ОБЛОЖКИ АЛЬБОМА И КНОПКИ ПОКАЗАТЬ ТЕКСТ ПЕСНИ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ */
 @media (max-width: 1000px) {
   .album-cover {
     display: none;

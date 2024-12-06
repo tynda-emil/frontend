@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.querySelector('input[name="password"]').value;
 
     try {
-      const baseURL = "http://192.168.1.201:8080"; //здесь нужно поменять IP адрес и порт на адрес на котором запущен микросервис логина и регистрации
+      const baseURL = `http://${window.config.logRegServiceIp}:${window.config.logRegServicePort}`;
       const response = await fetch(`${baseURL}/auth/login`, {
         method: "POST",
         headers: {
@@ -17,17 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.ok) {
-        console.log("Status ok received from backend");
+        //console.log("Status ok received from backend.");
         const data = await response.json();
-        console.log("Logged in successfully:", data);
+        //console.log("Logged in successfully:", data);
         localStorage.setItem("token", data.token);
         window.location.href = "../pages/main.html";
       } else {
-        alert("Login failed");
-        console.log("Ne ok....");
+        alert("Wrong username or password.");
+        console.log("Login failed.");
       }
     } catch (error) {
-      console.log("ОШИБКА!!!");
       console.error("Error during login:", error);
       alert("Something went wrong. Please try again.");
     }
