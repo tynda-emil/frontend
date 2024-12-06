@@ -2,20 +2,22 @@
 .carousel-wrapper {
     display: flex;
     align-items: center;
-    gap: 10px;
-    overflow: hidden; /* Скрыть содержимое, которое выходит за пределы карусели */
+    gap: 20px;
+    overflow: hidden; /* Скрыть содержимое за пределами карусели */
     position: relative;
-    margin-top:20px;
-    margin-bottom:20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%; /* Убедитесь, что обертка карусели занимает всю ширину */
 }
 
 .carousel {
     display: flex;
-    gap: 15px;
+    gap: 15px; /* Расстояние между элементами */
     overflow-x: auto; /* Горизонтальная прокрутка */
     scroll-behavior: smooth; /* Плавная прокрутка */
-    scroll-snap-type: x mandatory; /* Автоматическое выравнивание */
+    scroll-snap-type: x mandatory; /* Прокрутка с прилипанием */
     padding: 10px 0;
+    width: 100%; /* Убедитесь, что карусель занимает всю ширину */
 }
 
 .carousel::-webkit-scrollbar {
@@ -40,9 +42,9 @@
 
 /* STYLES FOR ARTISTS CAROUSEL */
 .artist, .album {
-    flex: 0 0 calc(100% / 6 - 15px); /* 6 элементов на экране */
+    flex: 0 0 calc((100% - (5 * 15px)) / 6); /* 6 элементов + 5 промежутков по 15px */
     text-align: center;
-    scroll-snap-align: start; /* Центровка элементов при прокрутке */
+    scroll-snap-align: start; /* Элементы фиксируются в начале */
     cursor: pointer;
 }
 
@@ -162,19 +164,19 @@
 /* Для адаптации на меньших экранах */
 @media (max-width: 768px) {
     .artist {
-        flex: 0 0 calc(100% / 3 - 10px); /* 3 элемента на экране */
+        flex: 0 0 calc(100% / 4 - 10px); /* 3 элемента на экране */
     }
     .sectionForAlbums .album{
-        flex: 0 0 calc(100% / 3 - 10px);
+        flex: 0 0 calc(100% / 4 - 10px);
     }
-    .artist-circle, .sectionForAlbums .album-cover {
+    .artist-circle-small, .sectionForAlbums .album-cover {
         width: 100px;
         height: 100px;
     }
-    .artist p, .sectionForAlbums p {
+    .artist .artistName, .sectionForAlbums p {
         font-size: 15px;
     }
     .carousel {
-        gap: 10px; /* Меньшее расстояние между элементами на мобильных */
+        gap: 10px;
     }
 }

@@ -368,27 +368,6 @@ main {
   cursor: pointer;
 }
 
-
-
-/* Для адаптации на меньших экранах */
-@media (max-width: 768px) {
-  .artist {
-    flex: 0 0 calc(100% / 3 - 10px); /* 3 элемента на экране */
-  }
-
-  .artist-circle {
-    width: 80px;
-    height: 80px;
-  }
-
-  .artist p {
-    font-size: 12px;
-  }
-}
-
-
-
-
 /* АДАПТАЦИЯ ОБЛОЖКИ АЛЬБОМА И КНОПКИ ПОКАЗАТЬ ТЕКСТ ПЕСНИ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ */
 @media (max-width: 1000px) {
   .album-cover {

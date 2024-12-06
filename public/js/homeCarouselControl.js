@@ -1,4 +1,4 @@
-/* CONTROL FOR ARTISTS CAROUSEL */
+/* CONTROL FOR ARTISTS AND ALBUMS CAROUSEL */
 document.addEventListener("DOMContentLoaded", () => {
   // Функция для настройки карусели
   function setupCarousel(
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Определяем ширину прокрутки одного элемента
     const scrollAmount =
-      carousel.querySelector(itemSelector)?.offsetWidth + 15 || 200; // 15 — значение gap
+      carousel.querySelector(itemSelector)?.offsetWidth + 15 || 200;
 
     // Прокрутка влево
     leftButton.addEventListener("click", () => {
@@ -64,12 +64,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     //   artists: [
     //     { name: "Mock Artist 1" },
     //     { name: "Mock Artist 2" },
-    //     // Добавьте больше артистов
+    //     { name: "Mock Artist 1" },
+    //     { name: "Mock Artist 2" },
+    //     { name: "Mock Artist 1" },
+    //     { name: "Mock Artist 2" },
+    //     { name: "Mock Artist 1" },
+    //     { name: "Mock Artist 2" },
     //   ],
     //   albums: [
-    //     { title: "Mock Album 1", artist: "Mock Artist 1" },
-    //     { title: "Mock Album 2", artist: "Mock Artist 2" },
-    //     // Добавьте больше альбомов
+    //     { name: "Mock Album 1", artist: "Mock Artist 1" },
+    //     { name: "Mock Album 2", artist: "Mock Artist 2" },
+    //     { name: "Mock Album 1", artist: "Mock Artist 1" },
+    //     { name: "Mock Album 2", artist: "Mock Artist 2" },
+    //     { name: "Mock Album 1", artist: "Mock Artist 1" },
+    //     { name: "Mock Album 2", artist: "Mock Artist 2" },
+    //     { name: "Mock Album 1", artist: "Mock Artist 1" },
+    //     { name: "Mock Album 2", artist: "Mock Artist 2" },
     //   ],
     // };
 
@@ -79,8 +89,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       const artistElement = document.createElement("div");
       artistElement.classList.add("artist");
       artistElement.innerHTML = `
-        <div class="artist-circle"></div>
-        <p>${artist.name}</p>
+        <div class="artist-circle artist-circle-small"></div>
+        <p class="artistName">${artist.name}</p>
       `;
       artistsContainer.appendChild(artistElement);
     });
