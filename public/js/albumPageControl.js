@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     // ID АЛЬБОМА ПЕРЕДАЕТСЯ ЧЕРЕЗ URL
     const params = new URLSearchParams(window.location.search);
-    const albumId = params.get("id");
+    let albumId = params.get("id");
 
     if (!albumId) {
-      throw new Error("Id альбома не передано.");
+      albumId = -1;
     }
 
     let albumData;
@@ -41,16 +41,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         year: 2024,
         cover: "https://via.placeholder.com/200",
         tracks: [
-          { name: "Песня 1", duration: "03:54" },
-          { name: "Песня 2", duration: "04:12" },
-          { name: "Песня 3", duration: "02:48" },
-          { name: "Песня 4", duration: "03:35" },
-          { name: "Песня 5", duration: "03:01" },
-          { name: "Песня 6", duration: "03:01" },
-          { name: "Песня 7", duration: "03:01" },
+          { name: "Песня 1", duration: 154 },
+          { name: "Песня 2", duration: 154 },
+          { name: "Песня 3", duration: 154 },
+          { name: "Песня 4", duration: 154 },
+          { name: "Песня 5", duration: 154 },
+          { name: "Песня 6", duration: 154 },
+          { name: "Песня 7", duration: 154 },
         ],
       };
     }
+    //console.log(albumData);
 
     // ОТРИСОВКА ДАННЫХ ОБ АЛЬБОМЕ
     document.querySelector(".album-title").textContent = albumData.title;
@@ -64,18 +65,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     tracklistContainer.innerHTML = ""; // Очищаем контейнер для треков
 
     albumData.tracks.forEach((track, index) => {
+      const trackMinutes = Math.floor(track.duration / 60);
+      const trackSeconds = track.duration % 60;
+      const trackDuration = `${trackMinutes}:${trackSeconds.toString().padStart(2, "0")}`;
+
       const trackElement = document.createElement("div");
       trackElement.className = `track ${index % 2 === 0 ? "track-even" : "track-odd"}`;
 
       trackElement.innerHTML = `
     <span class="track-name">${track.name}</span>
-    <span class="track-duration">${track.duration}</span>
+    <span class="track-duration">${trackDuration}</span>
   `;
 
       tracklistContainer.appendChild(trackElement);
     });
   } catch (error) {
     console.error("Ошибка при загрузке данных альбома:", error);
-    alert("Не удалось загрузить данные альбома. Попробуйте снова.");
   }
 });
