@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       // ЗАПРОС К БЭКЕНДУ
-      const baseURL = `http://${window.config.mainServiceIp}:${window.config.mainServicePort}`;
+      const baseURL = `http://${window.config.albumServiceIp}:${window.config.albumServicePort}`;
       const response = await fetch(`${baseURL}/albums/${albumId}`, {
         method: "GET",
         headers: {

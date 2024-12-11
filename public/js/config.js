@@ -1,11 +1,14 @@
 const frontendIp = "192.168.1.201"; // IP-адрес фронтенда
 const frontendPort = 5500; // Порт фронтенда
 
-const logRegServiceIp = "192.168.1.201"; // IP-адрес сервиса логина и регистрации
+const logRegServiceIp = "localhost"; // IP-адрес сервиса логина и регистрации
 const logRegServicePort = 8080; // Порт сервиса логина и регистрации
 
-const mainServiceIp = "192.168.1.201"; // IP-адрес Main Service
+const mainServiceIp = "localhost"; // IP-адрес Main Service
 const mainServicePort = 8082; // Порт Main Service
+
+const albumServiceIp = "localhost"; //IP-адрес Album Service
+const albumServicePort = 8083; //Порт Album Service
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
@@ -24,5 +27,7 @@ if (typeof module !== "undefined" && module.exports) {
     logRegServicePort,
     mainServiceIp,
     mainServicePort,
+    albumServiceIp,
+    albumServicePort,
   };
 }
