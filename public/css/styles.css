@@ -7,7 +7,7 @@
 /* Ползунок (thumb) полосы прокрутки */
 ::-webkit-scrollbar-thumb {
   background-color: #c195ce; /* Цвет ползунка */
-  border-radius: 10px; /* Закругленные углы */
+  border-radius: 3px; /* Закругленные углы */
 }
 
 /* Когда ползунок в состоянии hover */

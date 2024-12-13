@@ -7,6 +7,9 @@ const logRegServicePort = 8080; // Порт сервиса логина и ре�
 const mainServiceIp = "localhost"; // IP-адрес Main Service
 const mainServicePort = 8082; // Порт Main Service
 
+const albumServiceIp = "localhost"; //IP-адрес Album Service
+const albumServicePort = 8083; //Порт Album Service
+
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     frontendIp,
@@ -24,5 +27,7 @@ if (typeof module !== "undefined" && module.exports) {
     logRegServicePort,
     mainServiceIp,
     mainServicePort,
+    albumServiceIp,
+    albumServicePort,
   };
 }

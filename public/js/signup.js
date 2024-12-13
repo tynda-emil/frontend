@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
         console.log("Registration successful:", data);
         //alert("Registration successful! You can now log in.");
-        window.location.href = "login.html"; // Переход на страницу логина
+        window.location.href = "login.html"; // Переход на страницу логина после успешного логина
       } else {
         const errorData = await response.json();
         alert(`Registration failed: ${errorData.message || "Unknown error"}`);

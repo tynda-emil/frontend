@@ -38,29 +38,34 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 });
 
-/* ПОЛУЧЕНИЕ СПИСКА АРТИСТОВ И АЛЬБОМОВ С БЭКЕНДА */
+/* ПОЛУЧЕНИЕ СПИСКА АРТИСТОВ И АЛЬБОМОВ С БЭКЕНДА
+ * ЕСЛИ НЕТ ДАННЫХ, ТО ОТРИСОВЫВАЮТСЯ ФИКТИВНЫЕ ДАННЫЕ */
 document.addEventListener("DOMContentLoaded", async () => {
   const baseURL = `http://${window.config.mainServiceIp}:${window.config.mainServicePort}`;
+  let data;
 
   try {
-    // const response = await fetch(`${baseURL}/home`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    //
-    // if (!response.ok) {
-    //   alert("Failed to load data from server.");
-    //   console.error("Error fetching data:", response.statusText);
-    //   return;
-    // }
-    //
-    // // Получаем JSON с данными
-    // const data = await response.json();
+    // ЗАПРОС К БЭКЕНДУ
+    const response = await fetch(`${baseURL}/home`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    // Фиктивные данные
-    const data = {
+    if (!response.ok) {
+      throw new Error("Не удалось получить данные с сервера");
+    }
+
+    data = await response.json();
+  } catch (error) {
+    console.warn(
+      "Так как произошла ошибка данных при попытке получить данные с бэкенда, то будут использованы фиктивные данные",
+      error,
+    );
+
+    // ФИКТИВНЫЕ ДАННЫЕ. ОТРИСОВЫВАЮТСЯ ТОЛЬКО ПРИ ОШИБКЕ ПОЛУЧЕНИЯ ДАННЫХ С БЭКЕНДА.
+    data = {
       artists: [],
       albums: [],
     };
@@ -77,36 +82,36 @@ document.addEventListener("DOMContentLoaded", async () => {
         artist: `Mock artist ${i}`,
       });
     }
-
-    // Рендерим артистов
-    const artistsContainer = document.querySelector(".artists-container");
-    data.artists.forEach((artist) => {
-      const artistElement = document.createElement("div");
-      artistElement.classList.add("artist");
-      artistElement.innerHTML = `
-        <div class="artist-circle artist-circle-small"></div>
-        <p class="artistName">${artist.name}</p>
-      `;
-      artistsContainer.appendChild(artistElement);
-    });
-
-    // Рендерим альбомы
-    const albumsContainer = document.querySelector(".albums-container");
-    data.albums.forEach((album) => {
-      const albumElement = document.createElement("div");
-      albumElement.classList.add("album");
-      albumElement.innerHTML = `
-        <div class="album-cover"></div>
-        <p class="albumName">${album.name}</p>
-        <p class="artistName">${album.artist}</p>
-      `;
-      albumElement.addEventListener("click", () => {
-        window.location.href = `albumPage.html?id=${album.id}`;
-      });
-      albumsContainer.appendChild(albumElement);
-    });
-  } catch (error) {
-    console.error("Error loading data:", error);
-    alert("Something went wrong while loading data. Please try again later.");
   }
+
+  // ОТРИСОВКА АРТИСТОВ
+  const artistsContainer = document.querySelector(".artists-container");
+  data.artists.forEach((artist) => {
+    const artistElement = document.createElement("div");
+    artistElement.classList.add("artist");
+    artistElement.innerHTML = `
+      <div class="artist-circle artist-circle-small"></div>
+      <p class="artistName">${artist.name}</p>
+    `;
+    artistsContainer.appendChild(artistElement);
+  });
+
+  // ОТРИСОВКА АЛЬБОМОВ
+  const albumsContainer = document.querySelector(".albums-container");
+  data.albums.forEach((album) => {
+    const albumElement = document.createElement("div");
+    albumElement.classList.add("album");
+    albumElement.innerHTML = `
+      <div class="album-cover"></div>
+      <p class="albumName">${album.name}</p>
+      <p class="artistName">${album.artist}</p>
+    `;
+
+    // СЛУШАТЕЛЬ СОБЫТИЙ ДЛЯ КАЖДОГО АЛЬБОМА НА КЛИК
+    albumElement.addEventListener("click", () => {
+      window.location.href = `albumPage.html?id=${album.id}`;
+    });
+
+    albumsContainer.appendChild(albumElement);
+  });
 });
