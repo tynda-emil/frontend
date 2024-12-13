@@ -1,4 +1,4 @@
-const frontendIp = "192.168.1.201"; // IP-адрес фронтенда
+const frontendIp = "localhost"; // IP-адрес фронтенда
 const frontendPort = 5500; // Порт фронтенда
 
 const logRegServiceIp = "localhost"; // IP-адрес сервиса логина и регистрации

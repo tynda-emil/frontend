@@ -35,7 +35,9 @@
       <!--------------------- PLAYER CONTAINER --------------------->
       <!--контейнер с обложкой, названием трека, строчкой проигрывания и контролсами-->
       <div class="player-container">
-        <div class="album-cover"></div>
+        <div class="album-cover">
+          <img src="../images/frogs.gif" width=80px height =80px;>
+        </div>
         <div class="track-info">
           <h3>Track Name</h3>
           <p>Artist Name</p>
@@ -47,6 +49,7 @@
           <div class="controls">
             <button id="prevBtn">&#9664;&#9664;</button>
             <button id="playPauseBtn">&#9654;</button>
+            <audio id="audioPlayer" preload="auto"></audio>
             <button id="nextBtn">&#9654;&#9654;</button>
           </div>
         </div>
