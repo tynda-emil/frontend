@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // Передаем токен в заголовке
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -34,11 +34,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Фиктивные данные на случай ошибки
     userTracks = [
-      { name: 'Mock Track 1', duration: 154 },
-      { name: 'Mock Track 2', duration: 200 },
-      { name: 'Mock Track 3', duration: 180 },
-      { name: 'Mock Track 4', duration: 210 },
-      { name: 'Mock Track 5', duration: 190 },
+      { id: 1, name: 'Mock Track 1', duration: 154 },
+      { id: 2, name: 'Mock Track 2', duration: 200 },
+      { id: 3, name: 'Mock Track 3', duration: 180 },
+      { id: 4, name: 'Mock Track 4', duration: 210 },
+      { id: 5, name: 'Mock Track 5', duration: 190 },
     ];
   }
 
@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const trackElement = document.createElement('div');
     trackElement.className = `track ${index % 2 === 0 ? 'track-even' : 'track-odd'}`;
+    trackElement.setAttribute('data-id', track.id); // Добавляем ID трека для удаления
 
     // Контент каждой песни
     trackElement.innerHTML = `
@@ -66,8 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       </button>
       <div class="track-menu hidden" id="menu-${index}">
         <ul>
-          <li>Add to Playlist</li>
-          <li>Remove from Library</li>
+          <li class="remove-track-btn" data-id="${track.id}">Remove from Library</li>
         </ul>
       </div>
     `;
@@ -75,10 +75,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Добавляем слушатель для кнопки с тремя точками
     const optionsButton = trackElement.querySelector('.track-options-btn');
     const trackMenu = trackElement.querySelector(`#menu-${index}`);
+    const removeButton = trackElement.querySelector('.remove-track-btn');
 
     optionsButton.addEventListener('click', (event) => {
       event.stopPropagation();
       trackMenu.classList.toggle('hidden');
+    });
+
+    // Удаление песни при клике на "Remove from Library"
+    removeButton.addEventListener('click', async () => {
+      const songId = removeButton.getAttribute('data-id');
+
+      try {
+        const deleteResponse = await fetch(
+          `${baseURL}/MySongs/remove?songId=${songId}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        if (!deleteResponse.ok) {
+          throw new Error('Failed to remove song.');
+        }
+
+        alert('Song removed successfully.');
+        trackElement.remove(); // Удаляем элемент из DOM
+      } catch (error) {
+        console.error('Error removing song:', error);
+        alert('Failed to remove the song. Please try again.');
+      }
     });
 
     // Скрываем меню при клике за пределами
