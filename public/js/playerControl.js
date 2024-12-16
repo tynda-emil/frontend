@@ -44,26 +44,15 @@ function updateTrackInfo(trackName) {
       break;
     }
   }
-}
 
-// Заполняем данные в блок .track-info
-const trackInfo = document.querySelector(".track-info");
-trackInfo.querySelector("h3").textContent = title
-  ? title.trim()
-  : "Unknown Title";
-trackInfo.querySelector("p").textContent = artist
-  ? artist.trim()
-  : "Unknown Artist";
-
-// ОБНОВЛЕНИЕ ПРОГРЕССА
-function updateProgress() {
-  if (isPlaying) {
-    currentProgress += 0.5; // Увеличиваем прогресс
-    if (currentProgress > 100) {
-      currentProgress = 0;
-    }
-    progressBar.style.width = currentProgress + "%";
-  }
+  // Заполняем данные в блок .track-info
+  const trackInfo = document.querySelector(".track-info");
+  trackInfo.querySelector("h3").textContent = title
+    ? title.trim()
+    : "Unknown Title";
+  trackInfo.querySelector("p").textContent = artist
+    ? artist.trim()
+    : "Unknown Artist";
 }
 
 function playSong(trackName) {
@@ -146,7 +135,7 @@ volumeControl.addEventListener("input", () => {
   audioPlayer.volume = volumeControl.value / 100;
 });
 
-// ВЫДВИГАЮЩАЯСЯ ШТУКА ДЛЯ ТЕКСТА ПЕСНИ СПРАВА
+// Управление отображением текста песни
 document.getElementById("showLyricsBtn").addEventListener("click", function () {
   const lyricsContainer = document.getElementById("lyricsContainer");
   const button = this;
@@ -154,13 +143,11 @@ document.getElementById("showLyricsBtn").addEventListener("click", function () {
   button.classList.toggle("active");
 });
 
-// это для модального окна (которое на весь экран), где отображается текст песни
-// КНОПКА "НА ВЕСЬ ЭКРАН
+// Модальное окно для текста песни
 document.querySelector(".fullscreenBtn").addEventListener("click", function () {
   document.getElementById("fullscreenLyricsModal").style.display = "flex";
 });
 
-// КНОПКА "ЗАКРЫТЬ"
 document.querySelector(".closeModalBtn").addEventListener("click", function () {
   document.getElementById("fullscreenLyricsModal").style.display = "none";
 });
