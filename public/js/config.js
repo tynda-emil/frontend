@@ -10,6 +10,9 @@ const mainServicePort = 8082; // Порт Main Service
 const albumServiceIp = 'localhost'; //IP-адрес Album Service
 const albumServicePort = 8083; //Порт Album Service
 
+const mySongsServiceIp = 'localhost'; //IP-адрес My Songs Service
+const mySongsServicePort = 8084; //Порт My Songs Service
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     frontendIp,
@@ -29,5 +32,7 @@ if (typeof module !== 'undefined' && module.exports) {
     mainServicePort,
     albumServiceIp,
     albumServicePort,
+    mySongsServiceIp,
+    mySongsServicePort,
   };
 }
