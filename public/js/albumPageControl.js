@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       // ЗАПРОС К БЭКЕНДУ
       const baseURL = `http://${window.config.albumServiceIp}:${window.config.albumServicePort}`;
-      const response = await fetch(`${baseURL}/albums/${albumId}`, {
+      const response = await fetch(`${baseURL}/album/${albumId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -182,10 +182,16 @@ document.addEventListener('DOMContentLoaded', async () => {
        `;
 
       // Добавляем обработчик клика для выбора трека
-      trackElement.addEventListener('click', () => {
+      trackElement.addEventListener('click', (event) => {
+        // Проверка, что клик был не на кнопке с тремя точками
+        if (event.target.closest('.track-options-btn')) {
+          return;
+        }
+
         currentTrackIndex = index;
         playTrack(index);
       });
+
       tracklistContainer.appendChild(trackElement);
     });
 
@@ -208,6 +214,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         menu.classList.toggle('hidden');
       }
     });
+
+    // ОБРАБОТКА КЛИКА НА "ADD TO MY SONGS" --> добавляем запрос к бэкенду
+    document
+      .querySelector('.tracklist')
+      .addEventListener('click', async (event) => {
+        const addToLibraryBtn = event.target.closest('.add-to-library');
+        if (addToLibraryBtn) {
+          const songId = addToLibraryBtn.dataset.songId;
+          const token = localStorage.getItem('token'); // Получаем токен пользователя
+
+          if (!token) {
+            alert('User is not authenticated. Please log in.');
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `http://${window.config.mySongsServiceIp}:${window.config.mySongsServicePort}/MySongs/add?songId=${songId}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`, // Передаем токен
+                },
+              },
+            );
+
+            if (response.ok) {
+              //хз
+            } else if (response.status === 409) {
+              alert('This song is already in your library.');
+            } else {
+              throw new Error('Failed to add song.');
+            }
+          } catch (error) {
+            console.error('Error adding song to library:', error);
+            alert('Failed to add song. Please try again later.');
+          }
+        }
+      });
 
     // Закрытие меню при клике вне его
     document.addEventListener('click', (event) => {

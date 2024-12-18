@@ -117,6 +117,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
+    trackElement.addEventListener('click', (event) => {
+      if (event.target.closest('.track-options-btn')) {
+        return; // Если клик был по кнопке меню, ничего не делаем
+      }
+      console.log(`Track clicked: ${track.name}`); // Здесь можно добавить воспроизведение трека
+    });
+
     // Добавляем песню в контейнер
     tracklistContainer.appendChild(trackElement);
   });
