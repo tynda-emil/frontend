@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     </button>
     <div class="track-menu hidden" id="menu-${index}">
       <ul>
-        <li>Add to Library</li>
+        <li>Add to My Songs</li>
       </ul>
     </div>
   `;

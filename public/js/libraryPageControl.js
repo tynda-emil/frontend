@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       </button>
       <div class="track-menu hidden" id="menu-${index}">
         <ul>
-          <li class="remove-track-btn" data-id="${track.id}">Remove from Library</li>
+          <li class="remove-track-btn" data-id="${track.id}">Remove from My Songs</li>
         </ul>
       </div>
     `;

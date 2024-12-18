@@ -268,6 +268,7 @@ aside ul {
   color: white;
   text-decoration: none;
   padding: 12px;
+  white-space: nowrap;
 }
 .label {
   font-family: "Red Hat Text", sans-serif;
@@ -282,12 +283,16 @@ aside ul {
   width: 25px;
 }
 .label {
-  display: none;
+  font-family: "Red Hat Text", sans-serif;
   margin-left: 12px;
   font-size: 18px;
+  visibility: hidden; /* Начально скрыто, но элемент занимает место */
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 aside:hover .label {
-  display: inline;
+  visibility: visible;
+  opacity: 1;
 }
 aside:hover .icon {
   margin-right: 12px;
