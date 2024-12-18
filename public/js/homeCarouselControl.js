@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // СЛУШАТЕЛЬ СОБЫТИЙ ДЛЯ КАЖДОГО АЛЬБОМА НА КЛИК
     albumElement.addEventListener("click", () => {
-      window.location.href = `albumPage.html?id=${album.id}`;
+      window.location.href = `../pages/albumPage.html?id=${album.id}`;
     });
 
     albumsContainer.appendChild(albumElement);

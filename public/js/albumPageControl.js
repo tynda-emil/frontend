@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", async () => {
+/* ЗАПРОС К БЭКЕНДУ ЗА ДАННЫМИ ОБ АЛЬБОМЕ, ИСПОЛЬЗУЯ ID АЛЬБОМА, ПЕРЕДАННОГО ИЗ URL
+ * ЕСЛИ НЕТ РЕАЛЬНЫХ ДАННЫХ, ТО ОТРИСОВЫВАЮТСЯ ФИКТИВНЫЕ */
+document.addEventListener('DOMContentLoaded', async () => {
   try {
     console.log("Script loaded!");
     const params = new URLSearchParams(window.location.search);
@@ -8,60 +10,58 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!albumId) {
       albumId = -1;
     }
-
     let albumData;
 
     try {
       // ЗАПРОС К БЭКЕНДУ
-      const baseURL = "http://localhost:8083";
-
-      const response = await fetch(`${baseURL}/album/${albumId}`, {
-        method: "GET",
+      const baseURL = `http://${window.config.albumServiceIp}:${window.config.albumServicePort}`;
+      const response = await fetch(`${baseURL}/albums/${albumId}`, {
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
       if (!response.ok) {
-        throw new Error("Не удалось получить данные альбома");
+        throw new Error('Не удалось получить данные альбома');
       }
 
       albumData = await response.json();
     } catch (error) {
       console.warn(
-        "Ошибка получения реальных данных, используются фиктивные данные:",
+        'Ошибка получения реальных данных, используется фиктивные данные:',
         error,
       );
 
       // ФИКТИВНЫЕ ДАННЫЕ
       albumData = {
-        title: "Бог рэпа",
-        artist: "Face",
-        genre: "Хип-хоп",
+        title: 'Бог рэпа',
+        artist: 'Face',
+        genre: 'Хип-хоп',
         year: 2024,
-        cover: "https://via.placeholder.com/200",
+        cover: 'https://via.placeholder.com/200',
         tracks: [
-          { name: "Песня 1", duration: 154 },
-          { name: "Песня 2", duration: 154 },
-          { name: "Песня 3", duration: 154 },
-          { name: "Песня 4", duration: 154 },
-          { name: "Песня 5", duration: 154 },
-          { name: "Песня 6", duration: 154 },
-          { name: "Песня 7", duration: 154 },
+          { name: 'Песня 1', duration: 154 },
+          { name: 'Песня 2', duration: 154 },
+          { name: 'Песня 3', duration: 154 },
+          { name: 'Песня 4', duration: 154 },
+          { name: 'Песня 5', duration: 154 },
+          { name: 'Песня 6', duration: 154 },
+          { name: 'Песня 7', duration: 154 },
         ],
       };
     }
 
     // ОТРИСОВКА ДАННЫХ ОБ АЛЬБОМЕ
-    document.querySelector(".album-title").textContent = albumData.title;
-    document.querySelector(".artist-name").textContent = albumData.artist;
-    document.querySelector(".album-meta").textContent =
+    document.querySelector('.album-title').textContent = albumData.title;
+    document.querySelector('.artist-name').textContent = albumData.artist;
+    document.querySelector('.album-meta').textContent =
       `${albumData.genre} • ${albumData.year}`;
-    document.querySelector(".album-image").src = albumData.cover;
+    document.querySelector('.album-image').src = albumData.cover;
 
     // ОТРИСОВКА СПИСКА ПЕСЕН
-    const tracklistContainer = document.querySelector(".tracklist");
-    tracklistContainer.innerHTML = ""; // Очищаем контейнер для треков
+    const tracklistContainer = document.querySelector('.tracklist');
+    tracklistContainer.innerHTML = ''; // Очищаем контейнер для треков
 
     let currentTrackIndex = 0;
     let isPlaying = false;
@@ -155,14 +155,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     albumData.tracks.forEach((track, index) => {
       const trackMinutes = Math.floor(track.duration / 60);
       const trackSeconds = track.duration % 60;
-      const trackDuration = `${trackMinutes}:${trackSeconds.toString().padStart(2, "0")}`;
+      const trackDuration = `${trackMinutes}:${trackSeconds.toString().padStart(2, '0')}`;
 
-      const trackElement = document.createElement("div");
-      trackElement.className = `track ${index % 2 === 0 ? "track-even" : "track-odd"}`;
+      const trackElement = document.createElement('div');
+      trackElement.className = `track ${index % 2 === 0 ? 'track-even' : 'track-odd'}`;
 
       trackElement.innerHTML = `
         <span class="track-name">${track.name}</span>
         <span class="track-duration">${trackDuration}</span>
+        <!-- МЕНЮ ДЛЯ ДЕЙСТВИЙ С ПЕСНЕЙ -->
+    <button class="track-options-btn" data-index="${index}">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
+    <div class="track-menu hidden" id="menu-${index}">
+      <ul>
+        <li>Add to My Songs</li>
+      </ul>
+    </div>
       `;
 
       // Добавляем обработчик клика для выбора трека
@@ -170,13 +179,41 @@ document.addEventListener("DOMContentLoaded", async () => {
         currentTrackIndex = index;
         playTrack(index);
       });
-
       tracklistContainer.appendChild(trackElement);
     });
 
     // Воспроизведение первого трека при загрузке
     playTrack(currentTrackIndex);
+
+    // Делегирование событий для кнопок с опциями
+    document.querySelector('.tracklist').addEventListener('click', (event) => {
+      // Проверяем, что нажата кнопка с тремя точками
+      if (event.target.closest('.track-options-btn')) {
+        const btn = event.target.closest('.track-options-btn');
+        const menu = document.getElementById(`menu-${btn.dataset.index}`);
+
+        // Закрываем все открытые меню
+        document.querySelectorAll('.track-menu').forEach((m) => {
+          if (m !== menu) m.classList.add('hidden');
+        });
+
+        // Переключаем видимость текущего меню
+        menu.classList.toggle('hidden');
+      }
+    });
+
+    // Закрытие меню при клике вне его
+    document.addEventListener('click', (event) => {
+      if (
+        !event.target.closest('.track-options-btn') &&
+        !event.target.closest('.track-menu')
+      ) {
+        document.querySelectorAll('.track-menu').forEach((menu) => {
+          menu.classList.add('hidden');
+        });
+      }
+    });
   } catch (error) {
-    console.error("Ошибка при загрузке данных альбома:", error);
+    console.error('Ошибка при загрузке данных альбома:', error);
   }
 });
