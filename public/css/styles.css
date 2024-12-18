@@ -241,19 +241,21 @@ input[type="range"]::-webkit-slider-runnable-track {
   display: flex;
   width: 100%;
   margin-top: 110px;
+  overflow-x: hidden;
 }
 aside {
   position: fixed;
   top: 110px;
   left: 0;
-  width: 90px; /* Увеличенная начальная ширина */
+  width: 90px; /* Начальная ширина */
   background-color: black;
   height: calc(100vh - 110px);
   padding: 15px;
   overflow-y: auto;
-  transition: width 0.3s;
-  align-items: center;
+  overflow-x: hidden; /* Скрываем горизонтальную прокрутку */
+  transition: width 0.3s ease;
   z-index: 120;
+  box-sizing: border-box; /* Учитываем padding в общей ширине */
 }
 aside:hover {
   width: 220px; /* Увеличенная ширина при наведении */
@@ -270,12 +272,6 @@ aside ul {
   padding: 12px;
   white-space: nowrap;
 }
-.label {
-  font-family: "Red Hat Text", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
-
 .icon {
   font-size: 28px; /* Увеличенный размер иконок */
   transition: margin-right 0.3s;
