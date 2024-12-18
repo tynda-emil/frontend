@@ -2,9 +2,10 @@
  * ЕСЛИ НЕТ РЕАЛЬНЫХ ДАННЫХ, ТО ОТРИСОВЫВАЮТСЯ ФИКТИВНЫЕ */
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    // ID АЛЬБОМА ПЕРЕДАЕТСЯ ЧЕРЕЗ URL
+    console.log("Script loaded!");
     const params = new URLSearchParams(window.location.search);
-    let albumId = params.get('id');
+    let albumId = params.get("id");
+    console.log(`Album ID: ${albumId}`);
 
     if (!albumId) {
       albumId = -1;
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         error,
       );
 
-      // ФИКТИВНЫЕ ДАННЫЕ. ОТРИСОВЫВАЮТСЯ ТОЛЬКО ПРИ ОШИБКЕ ПОЛУЧЕНИЯ ДАННЫХ С БЭКЕНДА.
+      // ФИКТИВНЫЕ ДАННЫЕ
       albumData = {
         title: 'Бог рэпа',
         artist: 'Face',
@@ -50,7 +51,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         ],
       };
     }
-    //console.log(albumData);
 
     // ОТРИСОВКА ДАННЫХ ОБ АЛЬБОМЕ
     document.querySelector('.album-title').textContent = albumData.title;
@@ -63,6 +63,95 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tracklistContainer = document.querySelector('.tracklist');
     tracklistContainer.innerHTML = ''; // Очищаем контейнер для треков
 
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+
+    const audioPlayer = document.getElementById("audioPlayer");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+
+    // Функция обновления информации о текущем треке
+    function updateTrackInfo(trackName) {
+      if (!trackName) {
+        console.error("Имя трека не указано.");
+        return;
+      }
+
+      // Убираем расширение .mp3
+      trackName = trackName.replace(".mp3", "");
+
+      // Проверяем разделитель (может быть длинное тире, короткое тире или дефис)
+      const separators = [" – ", " - ", "-"];
+      let artist = "Unknown Artist";
+      let title = "Unknown Title";
+
+      for (const separator of separators) {
+        if (trackName.includes(separator)) {
+          [artist, title] = trackName.split(separator);
+          break;
+        }
+      }
+
+      // Заполняем данные в блок .track-info
+      const trackInfo = document.querySelector(".track-info");
+      trackInfo.querySelector("h3").textContent = title ? title.trim() : "Unknown Title";
+      trackInfo.querySelector("p").textContent = artist ? artist.trim() : "Unknown Artist";
+    }
+
+    // Функция воспроизведения трека
+    function playTrack(index) {
+      if (!albumData.tracks[index]) {
+        console.error("Трек не найден.");
+        return;
+      }
+      const track = albumData.tracks[index];
+      const trackUrl = `http://localhost:8086/audio/${encodeURIComponent(track.name)}.mp3`; // Добавляем .mp3
+      console.log("Воспроизведение трека:", trackUrl);
+
+      audioPlayer.src = trackUrl;
+      audioPlayer.load();
+      audioPlayer.play()
+        .then(() => {
+          isPlaying = true;
+          playPauseBtn.innerHTML = "&#10074;&#10074;"; // Иконка Pause
+          updateTrackInfo(track.name); // Обновляем информацию о текущем треке
+        })
+        .catch((error) => {
+          console.error("Ошибка воспроизведения:", error);
+        });
+    }
+
+    // Обработчики событий для кнопок
+    playPauseBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        audioPlayer.pause();
+        isPlaying = false;
+        playPauseBtn.innerHTML = "&#9654;"; // Иконка Play
+      } else {
+        audioPlayer.play()
+          .then(() => {
+            isPlaying = true;
+            playPauseBtn.innerHTML = "&#10074;&#10074;"; // Иконка Pause
+          })
+          .catch((error) => {
+            console.error("Ошибка воспроизведения:", error);
+          });
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentTrackIndex = (currentTrackIndex + 1) % albumData.tracks.length; // Циклический переход
+      playTrack(currentTrackIndex);
+    });
+
+    prevBtn.addEventListener("click", () => {
+      currentTrackIndex =
+        (currentTrackIndex - 1 + albumData.tracks.length) % albumData.tracks.length; // Циклический переход назад
+      playTrack(currentTrackIndex);
+    });
+
+    // Отображение треков и добавление слушателей для клика
     albumData.tracks.forEach((track, index) => {
       const trackMinutes = Math.floor(track.duration / 60);
       const trackSeconds = track.duration % 60;
@@ -72,9 +161,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       trackElement.className = `track ${index % 2 === 0 ? 'track-even' : 'track-odd'}`;
 
       trackElement.innerHTML = `
-    <span class="track-name">${track.name}</span>
-    <span class="track-duration">${trackDuration}</span>
-    <!-- МЕНЮ ДЛЯ ДЕЙСТВИЙ С ПЕСНЕЙ -->
+        <span class="track-name">${track.name}</span>
+        <span class="track-duration">${trackDuration}</span>
+        <!-- МЕНЮ ДЛЯ ДЕЙСТВИЙ С ПЕСНЕЙ -->
     <button class="track-options-btn" data-index="${index}">
       <i class="fa-solid fa-ellipsis-vertical"></i>
     </button>
@@ -83,10 +172,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         <li>Add to My Songs</li>
       </ul>
     </div>
-  `;
+      `;
 
+      // Добавляем обработчик клика для выбора трека
+      trackElement.addEventListener("click", () => {
+        currentTrackIndex = index;
+        playTrack(index);
+      });
       tracklistContainer.appendChild(trackElement);
     });
+
+    // Воспроизведение первого трека при загрузке
+    playTrack(currentTrackIndex);
 
     // Делегирование событий для кнопок с опциями
     document.querySelector('.tracklist').addEventListener('click', (event) => {
