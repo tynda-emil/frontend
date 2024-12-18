@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       // ЗАПРОС К БЭКЕНДУ
       const baseURL = `http://${window.config.albumServiceIp}:${window.config.albumServicePort}`;
-      const response = await fetch(`${baseURL}/albums/${albumId}`, {
+      const response = await fetch(`${baseURL}/album/${albumId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       albumData = await response.json();
+
     } catch (error) {
       console.warn(
         'Ошибка получения реальных данных, используется фиктивные данные:',
@@ -59,6 +60,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       `${albumData.genre} • ${albumData.year}`;
     document.querySelector('.album-image').src = albumData.cover;
 
+    updateAlbumCover(albumId)
+
     // ОТРИСОВКА СПИСКА ПЕСЕН
     const tracklistContainer = document.querySelector('.tracklist');
     tracklistContainer.innerHTML = ''; // Очищаем контейнер для треков
@@ -71,6 +74,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nextBtn = document.getElementById('nextBtn');
     const prevBtn = document.getElementById('prevBtn');
 
+
+    
+  function updateAlbumCover(albumId) {
+      if (!albumId) {
+          console.error("trackName не указан.");
+          return;
+      }
+
+      const imageUrl = `http://localhost:8083/img/${albumId}`; // Путь к изображению
+      const albumCover = document.querySelector(".album-image");
+      
+      // Устанавливаем новый src для обложки
+      albumCover.src = imageUrl;
+
+      // Логирование для отладки
+      console.log("Обновление обложки альбома:", imageUrl);
+
+      // Обработка ошибок загрузки
+      albumCover.onerror = () => {
+          console.error(`Ошибка загрузки изображения: ${imageUrl}`);
+           // Установить изображение по умолчанию
+      };
+  }
     // Функция обновления информации о текущем треке
     function updateTrackInfo(trackName) {
       if (!trackName) {
@@ -102,7 +128,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         ? artist.trim()
         : 'Unknown Artist';
     }
+    function updateSongCover(trackName) {
+        if (!trackName) {
+            console.error("trackName не указан.");
+            return;
+        }
 
+        const imageUrl = `http://localhost:8086/img/${encodeURIComponent(trackName.replace(".mp3", ""))}`; // Путь к изображению
+        const albumCover = document.querySelector(".album-cover img");
+        
+        // Устанавливаем новый src для обложки
+        albumCover.src = imageUrl;
+
+        // Логирование для отладки
+        console.log("Обновление обложки альбома:", imageUrl);
+
+        // Обработка ошибок загрузки
+        albumCover.onerror = () => {
+            console.error(`Ошибка загрузки изображения: ${imageUrl}`);
+             // Установить изображение по умолчанию
+        };
+    }
     // Функция воспроизведения трека
     function playTrack(index) {
       if (!albumData.tracks[index]) {
@@ -121,6 +167,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           isPlaying = true;
           playPauseBtn.innerHTML = '&#10074;&#10074;'; // Иконка Pause
           updateTrackInfo(track.name); // Обновляем информацию о текущем треке
+          updateSongCover(track.name);
+          
         })
         .catch((error) => {
           console.error('Ошибка воспроизведения:', error);
