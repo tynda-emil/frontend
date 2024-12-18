@@ -24,6 +24,27 @@ async function getSongs() {
         console.error("Ошибка при загрузке песен:", error);
     }
 }
+function updateAlbumCover(trackName) {
+    if (!trackName) {
+        console.error("trackName не указан.");
+        return;
+    }
+
+    const imageUrl = `http://localhost:8086/img/${encodeURIComponent(trackName.replace(".mp3", ""))}`; // Путь к изображению
+    const albumCover = document.querySelector(".album-cover img");
+    
+    // Устанавливаем новый src для обложки
+    albumCover.src = imageUrl;
+
+    // Логирование для отладки
+    console.log("Обновление обложки альбома:", imageUrl);
+
+    // Обработка ошибок загрузки
+    albumCover.onerror = () => {
+        console.error(`Ошибка загрузки изображения: ${imageUrl}`);
+        albumCover.src = "../images/default.jpg"; // Установить изображение по умолчанию
+    };
+}
 function updateTrackInfo(trackName) {
     if (!trackName) {
         console.error("Имя трека не указано.");
@@ -32,6 +53,7 @@ function updateTrackInfo(trackName) {
 
     // Убираем расширение .mp3
     trackName = trackName.replace(".mp3", "");
+
 
     // Проверяем разделитель (может быть длинное тире, короткое тире или дефис)
     const separators = [" – ", " - ", "-"];
@@ -60,6 +82,7 @@ function playSong(trackName) {
     const songUrl = `http://localhost:8086/audio/${encodeURIComponent(trackName)}`;
     console.log("Воспроизведение трека:", songUrl);
     updateTrackInfo(trackName);
+    updateAlbumCover(trackName);
     audioPlayer.src = songUrl;
     audioPlayer.load();
     audioPlayer.addEventListener("canplay", () => {
