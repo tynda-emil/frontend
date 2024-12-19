@@ -13,13 +13,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     // Запрос к бэкенду за песнями пользователя
-    const response = await fetch(`${baseURL}/MySongs`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${baseURL}/MySongs?token=${encodeURIComponent(token)}&songId=${songId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
 
     if (!response.ok) {
       throw new Error('Failed to fetch user songs from the server.');
@@ -87,13 +89,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       const songId = removeButton.getAttribute('data-id');
 
       try {
-        const deleteResponse = await fetch(
-          `${baseURL}/MySongs/remove?songId=${songId}`,
+        const response = await fetch(
+          `http://${window.config.mySongsServiceIp}:${window.config.mySongsServicePort}/MySongs/remove?token=${encodeURIComponent(token)}&songId=${songId}`,
           {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
             },
           },
         );

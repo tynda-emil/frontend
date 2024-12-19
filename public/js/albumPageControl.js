@@ -231,12 +231,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           try {
             const response = await fetch(
-              `http://${window.config.mySongsServiceIp}:${window.config.mySongsServicePort}/MySongs/add?songId=${songId}`,
+              `http://${window.config.mySongsServiceIp}:${window.config.mySongsServicePort}/MySongs/add?token=${encodeURIComponent(token)}&songId=${songId}`,
               {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`, // Передаем токен
                 },
               },
             );
