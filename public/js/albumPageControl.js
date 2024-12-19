@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.album-meta').textContent =
       `${albumData.genre} • ${albumData.year}`;
     document.querySelector('.album-image').src = albumData.cover;
+    updateAlbumCover(albumId);
 
     // ОТРИСОВКА СПИСКА ПЕСЕН
     const tracklistContainer = document.querySelector('.tracklist');
@@ -231,11 +232,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           try {
             const response = await fetch(
-              `http://${window.config.mySongsServiceIp}:${window.config.mySongsServicePort}/MySongs/add?token=${encodeURIComponent(token)}&songId=${songId}`,
+              `http://${window.config.mySongsServiceIp}:${window.config.mySongsServicePort}/MySongs/add?songId=${songId}`,
               {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`, // Передаем токен
                 },
               },
             );

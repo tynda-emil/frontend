@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     // Запрос к бэкенду за песнями пользователя
     const response = await fetch(
-      `${baseURL}/MySongs?token=${encodeURIComponent(token)}&songId=${songId}`,
+      `${baseURL}/MySongs?token=${encodeURIComponent(token)}`,
       {
         method: 'GET',
         headers: {
@@ -89,12 +89,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       const songId = removeButton.getAttribute('data-id');
 
       try {
-        const response = await fetch(
-          `http://${window.config.mySongsServiceIp}:${window.config.mySongsServicePort}/MySongs/remove?token=${encodeURIComponent(token)}&songId=${songId}`,
+        const deleteResponse = await fetch(
+          `${baseURL}/MySongs/remove?songId=${songId}`,
           {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
             },
           },
         );

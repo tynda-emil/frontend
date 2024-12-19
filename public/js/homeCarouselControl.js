@@ -84,28 +84,56 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // ОТРИСОВКА АРТИСТОВ
-  const artistsContainer = document.querySelector(".artists-container");
-  data.artists.forEach((artist) => {
-    const artistElement = document.createElement("div");
-    artistElement.classList.add("artist");
-    artistElement.innerHTML = `
-      <div class="artist-circle artist-circle-small"></div>
-      <p class="artistName">${artist.name}</p>
-    `;
-    artistsContainer.appendChild(artistElement);
-  });
+ // ОТРИСОВКА АРТИСТОВ
+const artistsContainer = document.querySelector(".artists-container");
+data.artists.forEach((artist) => {
+  const artistElement = document.createElement("div");
+  artistElement.classList.add("artist");
+
+  // Динамический URL для изображения артиста
+  const artistImageUrl = `http://localhost:8083/img/${encodeURIComponent(artist.name)}`;
+
+  artistElement.innerHTML = `
+    <div class="artist-circle artist-circle-small">
+      <img src="${artistImageUrl}" 
+           alt="Изображение артиста" 
+           class="artist-image" 
+           width="80px" height="80px">
+    </div>
+    <p class="artistName">${artist.name}</p>
+  `;
+
+  // Обновление обложки с обработкой ошибки загрузки
+  const artistImage = artistElement.querySelector(".artist-image");
+  artistImage.onerror = () => {
+    console.warn(`Ошибка загрузки изображения для артиста ${artist.name}`);
+    artistImage.src = "../images/frogs.gif"; // Устанавливаем резервное изображение
+  };
+
+  artistsContainer.appendChild(artistElement);
+});
+
 
   // ОТРИСОВКА АЛЬБОМОВ
-  const albumsContainer = document.querySelector(".albums-container");
-  data.albums.forEach((album) => {
-    const albumElement = document.createElement("div");
-    albumElement.classList.add("album");
-    albumElement.innerHTML = `
-      <div class="album-cover"></div>
-      <p class="albumName">${album.name}</p>
-      <p class="artistName">${album.artist}</p>
-    `;
+const albumsContainer = document.querySelector(".albums-container");
+data.albums.forEach((album) => {
+  const albumElement = document.createElement("div");
+  albumElement.classList.add("album");
+
+  // Динамический URL для изображения
+  const albumCoverUrl = `http://localhost:8083/img/${album.id}`;
+
+  albumElement.innerHTML = `
+    <div class="album-cover">
+      <img src="${albumCoverUrl}" 
+           alt="Обложка альбома" 
+           class="album-image" 
+           width="80px" height="80px">
+    </div>
+    <p class="albumName">${album.name}</p>
+    <p class="artistName">${album.artist}</p>
+  `;
+
 
     // СЛУШАТЕЛЬ СОБЫТИЙ ДЛЯ КАЖДОГО АЛЬБОМА НА КЛИК
     albumElement.addEventListener("click", () => {
